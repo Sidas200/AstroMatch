@@ -1,13 +1,5 @@
 package com.utch.astromatch;
 
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import static android.service.controls.ControlsProviderService.TAG;
 
 import android.os.Bundle;
@@ -17,17 +9,15 @@ import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-
-    private EditText etName, etDay, etMonth, etYear;
-    private Button btnStart;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -94,5 +85,9 @@ public class MainActivity extends AppCompatActivity {
     Button bt1 = findViewById(R.id.send);
     EditText nombre = findViewById(R.id.name);
     EditText fecha = findViewById(R.id.date);
+
+
+
+
 
 }
