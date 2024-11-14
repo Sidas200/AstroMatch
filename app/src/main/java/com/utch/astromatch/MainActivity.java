@@ -14,10 +14,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
-    private EditText etName, etDay, etMonth, etYear;
-    private Button btnStart;
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // Continuar a la siguiente pantalla
                         //Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                       // intent.putExtra("name", name);
+                        // intent.putExtra("name", name);
                         //intent.putExtra("day", day);
                         //intent.putExtra("month", month);
                         //intent.putExtra("year", year);
@@ -116,4 +114,5 @@ public class MainActivity extends AppCompatActivity {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 }
+
 
