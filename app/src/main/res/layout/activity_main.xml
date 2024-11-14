@@ -1,19 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@drawable/noche_estrellas">
 
+    <!-- Logo de AstroMatch -->
     <TextView
+        android:id="@+id/logoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="@string/app_name"
+        android:textSize="36sp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="cursive"
+        android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Imagen de signos zodiacales -->
+    <ImageView
+        android:id="@+id/zodiacCircle"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_below="@id/logoText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/zodiac_description"
+        android:src="@drawable/LogoSinContorno" />
+
+    <!-- Campo de texto para el nombre -->
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/zodiacCircle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:hint="@string/hint_name"
+        android:backgroundTint="#00FFFF"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:inputType="textPersonName"
+        android:autofillHints="name" />
+
+    <!-- Campo de texto para la fecha de nacimiento -->
+    <EditText
+        android:id="@+id/et_birthdate"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/et_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:hint="@string/hint_birthdate"
+        android:backgroundTint="#00FFFF"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:inputType="date"
+        android:autofillHints="birthday" />
+
+    <!-- Botón de inicio -->
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_birthdate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/start_button"
+        android:backgroundTint="#FF00FF"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+</RelativeLayout>
+
