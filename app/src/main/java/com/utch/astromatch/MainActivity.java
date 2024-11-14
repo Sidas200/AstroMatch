@@ -14,8 +14,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+
+    private EditText etName, etDay, etMonth, etYear;
+    private Button btnStart;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -114,3 +116,4 @@ public class MainActivity extends AppCompatActivity {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 }
+

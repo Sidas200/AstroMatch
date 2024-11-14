@@ -67,7 +67,10 @@
         android:textColor="#FFFFFF"
         android:inputType="number" />
 
+
+    <!-- Campo de texto para el nombre -->
     <EditText
+
         android:id="@+id/et_month"
         android:layout_width="83dp"
         android:layout_height="wrap_content"
@@ -80,6 +83,7 @@
         android:textColor="#FFFFFF"
         android:inputType="number" />
 
+    <!-- Campo de texto para la fecha de nacimiento -->
     <EditText
         android:id="@+id/et_year"
         android:layout_width="83dp"
@@ -108,5 +112,3 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
 </RelativeLayout>
-
-
