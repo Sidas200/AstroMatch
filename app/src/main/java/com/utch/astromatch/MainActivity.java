@@ -1,95 +1,98 @@
 package com.utch.astromatch;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import static android.service.controls.ControlsProviderService.TAG;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
     private EditText etName, etDay, etMonth, etYear;
     private Button btnStart;
 
+import java.util.HashMap;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
 
-        // Inicializar los campos de texto y el botón
-        etName = findViewById(R.id.et_name);
-       /* etDay = findViewById(R.id.et_day);
-        etMonth = findViewById(R.id.et_month);
-        etYear = findViewById(R.id.et_year);*/
-        btnStart = findViewById(R.id.btn_start);
+            Map<String, Object> Usuarios = new HashMap<>();
+            User.put("first", "Ada");
+            User.put("last", "Lovelace");
+            User.put("born", 1815);
 
-        // Configurar el botón para responder al hacer clic
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Obtener los valores de los campos de texto
-                String name = etName.getText().toString().trim();
-                String dayStr = etDay.getText().toString().trim();
-                String monthStr = etMonth.getText().toString().trim();
-                String yearStr = etYear.getText().toString().trim();
+// Add a new document with a generated ID
+            db.collection("users")
+                    .add(User)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
+            // Create a new user with a first, middle, and last name
+            Map<String, Object> Usuarios = new HashMap<>();
+            User.put("first", "Alan");
+            User.put("middle", "Mathison");
+            User.put("last", "Turing");
+            User.put("born", 1912);
 
-                // Validar que todos los campos están llenos
-                if (name.isEmpty() || dayStr.isEmpty() || monthStr.isEmpty() || yearStr.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Por favor, completa todos los campos.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+// Add a new document with a generated ID
+            db.collection("users")
+                    .add(User)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
 
-                // Convertir día, mes y año a enteros
-                int day = Integer.parseInt(dayStr);
-                int month = Integer.parseInt(monthStr);
-                int year = Integer.parseInt(yearStr);
 
-                // Verificar que los valores de fecha son válidos
-                if (!isValidDate(day, month, year)) {
-                    Toast.makeText(MainActivity.this, "Fecha no válida. Por favor, revisa los valores.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // Continuar con la lógica, por ejemplo, ir a la siguiente pantalla
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                intent.putExtra("name", name);
-                intent.putExtra("day", day);
-                intent.putExtra("month", month);
-                intent.putExtra("year", year);
-                startActivity(intent);
-            }
         });
     }
 
-    // Método para validar la fecha de nacimiento
-    private boolean isValidDate(int day, int month, int year) {
-        // Verificar que el mes esté en el rango correcto
-        if (month < 1 || month > 12) {
-            return false;
-        }
+    Button bt1 = findViewById(R.id.send);
+    EditText nombre = findViewById(R.id.name);
+    EditText fecha = findViewById(R.id.date);
 
-        // Verificar que el día esté en el rango correcto según el mes
-        if (day < 1 || day > 31) {
-            return false;
-        }
-        if (month == 2) { // Febrero
-            if (isLeapYear(year)) {
-                return day <= 29;
-            } else {
-                return day <= 28;
-            }
-        }
-        if (month == 4 || month == 6 || month == 9 || month == 11) { // Meses con 30 días
-            return day <= 30;
-        }
-
-        return true;
-    }
-
-    // Método para verificar si es año bisiesto
-    private boolean isLeapYear(int year) {
-        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-    }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "785981817225",
+    "project_id": "astromatch-eb0c7",
+    "storage_bucket": "astromatch-eb0c7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785981817225:android:1aade5bcc6e1e169a22158",
+        "android_client_info": {
+          "package_name": "com.utch.astromatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEhFWmnp-Ga7bwZqk5rOCFHo88YlbykWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
