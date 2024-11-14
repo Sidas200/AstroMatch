@@ -1,0 +1,47 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/noche_estrellas"
+    android:padding="16dp">
+
+    <!-- Saludo con el nombre del usuario -->
+    <TextView
+        android:id="@+id/greetingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hola, Nombre"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginBottom="20dp" />
+
+    <!-- Imagen del logo del signo zodiacal -->
+    <ImageView
+        android:id="@+id/zodiacLogoImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="Logo del signo zodiacal"
+        android:layout_marginBottom="10dp" />
+
+    <!-- Imagen del nombre del signo zodiacal -->
+    <ImageView
+        android:id="@+id/zodiacNameImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Nombre del signo zodiacal"
+        android:layout_marginBottom="30dp" />
+
+    <!-- Botón de compatibilidad más grande -->
+    <Button
+        android:id="@+id/btn_compatibility"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="Compatibilidad"
+        android:backgroundTint="#FF00FF"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="18sp" />
+</LinearLayout>
