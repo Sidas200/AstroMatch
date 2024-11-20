@@ -19,6 +19,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView zodiacLogoImageView, zodiacNameImageView;
     private Button btnCompatibility;
     private DatabaseReference databaseReference;
+    private String zodiacSign; // Almacenar signo zodiacal
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +32,29 @@ public class HomeActivity extends AppCompatActivity {
         zodiacNameImageView = findViewById(R.id.zodiacNameImageView);
         btnCompatibility = findViewById(R.id.btn_compatibility);
 
+        // Obtener el userId pasado desde MainActivity
+        String userId = getIntent().getStringExtra("userId");
+
         // Inicializar referencia a Firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("users").child("userID"); // Cambia "userID" por el ID del usuario actual
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userId);
 
         // Obtener datos desde Firebase
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("name").getValue(String.class);
-                String zodiacSign = dataSnapshot.child("zodiacSign").getValue(String.class);
+                if (dataSnapshot.exists()) {
+                    String name = dataSnapshot.child("name").getValue(String.class);
+                    zodiacSign = dataSnapshot.child("signo").getValue(String.class);
 
-                // Configurar saludo con el nombre
-                greetingTextView.setText("Hola, " + name + "!");
+                    // Configurar saludo con el nombre
+                    greetingTextView.setText("Hola, " + name + "!");
 
-                // Configurar el logo y el nombre del signo zodiacal
-                int logoResId = getZodiacLogoResource(zodiacSign);
-                int nameResId = getZodiacNameResource(zodiacSign);
-                zodiacLogoImageView.setImageResource(logoResId);
-                zodiacNameImageView.setImageResource(nameResId);
+                    // Configurar el logo y el nombre del signo zodiacal
+                    int logoResId = getZodiacLogoResource(zodiacSign);
+                    int nameResId = getZodiacNameResource(zodiacSign);
+                    zodiacLogoImageView.setImageResource(logoResId);
+                    zodiacNameImageView.setImageResource(nameResId);
+                }
             }
 
             @Override
@@ -57,10 +63,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        // Configurar botón de compatibilidad para abrir otra actividad
+        // Configurar botón de compatibilidad para abrir CompatibilitiesActivity
         btnCompatibility.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, CompatibilityActivity.class);
-            intent.putExtra("zodiacSign", zodiacNameImageView.getContentDescription());
+            Intent intent = new Intent(HomeActivity.this, CompatibilitiesActivity.class);
+            intent.putExtra("zodiacSign", zodiacSign); // Pasar signo zodiacal
             startActivity(intent);
         });
     }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AstroMatch</string>
+    <string name="compatibilities_title">Compatibilidades de "%1$s"</string>
+
 </resources>
