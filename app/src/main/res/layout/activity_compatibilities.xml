@@ -1,0 +1,128 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/noche_estrellas">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/compatibilities_title"/>
+
+        <!-- Botón Muy Compatibles -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#1AFFFFFF"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/btnVeryCompatible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Muy Compatibles"
+                android:backgroundTint="#FF00FF"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/tvVeryCompatible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Signos altamente compatibles: Géminis, Leo. Estos signos complementan tus fortalezas y debilidades."
+                android:textColor="#FFFFFF"
+                android:visibility="gone"
+                android:paddingTop="10dp" />
+        </LinearLayout>
+
+        <!-- Botón Compatibles -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#1AFFFFFF"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/btnCompatible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FF00FF"
+                android:text="Compatibles"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/tvCompatible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Signos compatibles: Sagitario, Libra. Una conexión fuerte pero menos intensa."
+                android:textColor="#FFFFFF"
+                android:visibility="gone"
+                android:paddingTop="10dp" />
+        </LinearLayout>
+
+        <!-- Botón Neutrales -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#1AFFFFFF"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/btnNeutral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Neutrales"
+                android:backgroundTint="#FF00FF"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/tvNeutral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Signos neutrales: Acuario, Capricornio. Relación balanceada sin demasiada emoción."
+                android:textColor="#FFFFFF"
+                android:visibility="gone"
+                android:paddingTop="10dp" />
+        </LinearLayout>
+
+        <!-- Botón Incompatibles -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#1AFFFFFF"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/btnIncompatible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Incompatibles"
+                android:backgroundTint="#FF00FF"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/tvIncompatible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Signos incompatibles: Cáncer, Virgo. Estas relaciones tienden a ser desafiantes."
+                android:textColor="#FFFFFF"
+                android:visibility="gone"
+                android:paddingTop="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

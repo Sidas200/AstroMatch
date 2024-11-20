@@ -18,8 +18,12 @@ public class HomeActivity extends AppCompatActivity {
     private TextView greetingTextView;
     private ImageView zodiacLogoImageView, zodiacNameImageView;
     private Button btnCompatibility;
+    private DatabaseReference databaseReference;
+    private String zodiacSign; // Almacenar signo zodiacal
+
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,12 @@ public class HomeActivity extends AppCompatActivity {
                             // Configurar saludo con el nombre
                             greetingTextView.setText("Hola, " + name + "!");
 
+        // Configurar botón de compatibilidad para abrir CompatibilitiesActivity
+        btnCompatibility.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, CompatibilitiesActivity.class);
+            intent.putExtra("zodiacSign", zodiacSign); // Pasar signo zodiacal
+            startActivity(intent);
+        });
                             // Configurar el logo y el nombre del signo zodiacal
                             int logoResId = getZodiacLogoResource(signo);
                             int nameResId = getZodiacNameResource(signo);
