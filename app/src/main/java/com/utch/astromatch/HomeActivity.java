@@ -1,17 +1,17 @@
 package com.utch.astromatch;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -21,10 +21,17 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private String zodiacSign; // Almacenar signo zodiacal
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String userId;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // Obtener el userId pasado desde MainActivity
+        userId = getIntent().getStringExtra("userId");
 
         // Inicializar vistas
         greetingTextView = findViewById(R.id.greetingTextView);
@@ -32,36 +39,21 @@ public class HomeActivity extends AppCompatActivity {
         zodiacNameImageView = findViewById(R.id.zodiacNameImageView);
         btnCompatibility = findViewById(R.id.btn_compatibility);
 
-        // Obtener el userId pasado desde MainActivity
-        String userId = getIntent().getStringExtra("userId");
+        // Cargar datos del usuario desde Firebase
+        loadUserData();
+    }
 
-        // Inicializar referencia a Firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userId);
+    private void loadUserData() {
+        db.collection("users").document(userId).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            String name = documentSnapshot.getString("name");
+                            String signo = documentSnapshot.getString("signo");
 
-        // Obtener datos desde Firebase
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String name = dataSnapshot.child("name").getValue(String.class);
-                    zodiacSign = dataSnapshot.child("signo").getValue(String.class);
-
-                    // Configurar saludo con el nombre
-                    greetingTextView.setText("Hola, " + name + "!");
-
-                    // Configurar el logo y el nombre del signo zodiacal
-                    int logoResId = getZodiacLogoResource(zodiacSign);
-                    int nameResId = getZodiacNameResource(zodiacSign);
-                    zodiacLogoImageView.setImageResource(logoResId);
-                    zodiacNameImageView.setImageResource(nameResId);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Manejar errores aquí
-            }
-        });
+                            // Configurar saludo con el nombre
+                            greetingTextView.setText("Hola, " + name + "!");
 
         // Configurar botón de compatibilidad para abrir CompatibilitiesActivity
         btnCompatibility.setOnClickListener(v -> {
@@ -69,69 +61,62 @@ public class HomeActivity extends AppCompatActivity {
             intent.putExtra("zodiacSign", zodiacSign); // Pasar signo zodiacal
             startActivity(intent);
         });
+                            // Configurar el logo y el nombre del signo zodiacal
+                            int logoResId = getZodiacLogoResource(signo);
+                            int nameResId = getZodiacNameResource(signo);
+                            zodiacLogoImageView.setImageResource(logoResId);
+                            zodiacNameImageView.setImageResource(nameResId);
+                        } else {
+                            Toast.makeText(HomeActivity.this, "No se encontraron datos del usuario", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("HomeActivity", "Error al cargar datos del usuario", e);
+                        Toast.makeText(HomeActivity.this, "Error al cargar datos", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     // Método para obtener el recurso de imagen del logo basado en el signo zodiacal
-    private int getZodiacLogoResource(String zodiacSign) {
-        switch (zodiacSign) {
-            case "Aries":
-                return R.drawable.arieslogo;
-            case "Tauro":
-                return R.drawable.tauro;
-            case "Géminis":
-                return R.drawable.geminislogo;
-            case "Cáncer":
-                return R.drawable.cancer;
-            case "Leo":
-                return R.drawable.leologo;
-            case "Virgo":
-                return R.drawable.virgologo;
-            case "Libra":
-                return R.drawable.libralogo;
-            case "Escorpio":
-                return R.drawable.escorpiologo;
-            case "Sagitario":
-                return R.drawable.sagitariologo;
-            case "Capricornio":
-                return R.drawable.capricornio;
-            case "Acuario":
-                return R.drawable.acuario;
-            case "Piscis":
-                return R.drawable.piscislogo;
-            default:
-                return R.drawable.arieslogo; // Imagen por defecto
+    private int getZodiacLogoResource(String signo) {
+        switch (signo) {
+            case "Aries": return R.drawable.arieslogo;
+            case "Tauro": return R.drawable.tauro;
+            case "Géminis": return R.drawable.geminislogo;
+            case "Cáncer": return R.drawable.cancer;
+            case "Leo": return R.drawable.leologo;
+            case "Virgo": return R.drawable.virgologo;
+            case "Libra": return R.drawable.libralogo;
+            case "Escorpio": return R.drawable.escorpiologo;
+            case "Sagitario": return R.drawable.sagitariologo;
+            case "Capricornio": return R.drawable.capricornio;
+            case "Acuario": return R.drawable.acuario;
+            case "Piscis": return R.drawable.piscislogo;
+            default: return R.drawable.logo;
         }
     }
 
     // Método para obtener el recurso de imagen del nombre basado en el signo zodiacal
-    private int getZodiacNameResource(String zodiacSign) {
-        switch (zodiacSign) {
-            case "Aries":
-                return R.drawable.aries_letra;
-            case "Tauro":
-                return R.drawable.tauroletra;
-            case "Géminis":
-                return R.drawable.geminisletra;
-            case "Cáncer":
-                return R.drawable.cancerletra;
-            case "Leo":
-                return R.drawable.leoletra;
-            case "Virgo":
-                return R.drawable.virgoletra;
-            case "Libra":
-                return R.drawable.libralogo;
-            case "Escorpio":
-                return R.drawable.escorpioletra;
-            case "Sagitario":
-                return R.drawable.sagitarioletra;
-            case "Capricornio":
-                return R.drawable.capricornioletra;
-            case "Acuario":
-                return R.drawable.acuarioletra;
-            case "Piscis":
-                return R.drawable.pisciletra;
-            default:
-                return R.drawable.aries_letra; // Imagen por defecto
+    private int getZodiacNameResource(String signo) {
+        switch (signo) {
+            case "Aries": return R.drawable.aries_letra;
+            case "Tauro": return R.drawable.tauroletra;
+            case "Géminis": return R.drawable.geminisletra;
+            case "Cáncer": return R.drawable.cancerletra;
+            case "Leo": return R.drawable.leoletra;
+            case "Virgo": return R.drawable.virgoletra;
+            case "Libra": return R.drawable.libraletra;
+            case "Escorpio": return R.drawable.escorpioletra;
+            case "Sagitario": return R.drawable.sagitarioletra;
+            case "Capricornio": return R.drawable.capricornioletra;
+            case "Acuario": return R.drawable.acuarioletra;
+            case "Piscis": return R.drawable.pisciletra;
+            default: return R.drawable.logo;
         }
     }
 }
+
+

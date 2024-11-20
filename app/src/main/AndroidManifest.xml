@@ -29,6 +29,8 @@
             </intent-filter>
         </activity> <!-- CompatibilitiesActivity -->
         <activity android:name=".CompatibilitiesActivity" />
+        </activity>
+        <activity android:name=".UserInfoActivity" />
     </application>
 
 </manifest>
